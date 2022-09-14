@@ -51,7 +51,14 @@ async def get_lastname(message: types.Message):
         else:
             await message.answer('Неверно! Введи, пожалуйста, буквы на кириллице.')
     else:
-        await message.answer('Неверно! Попробуй ввести ещё раз.')
+        new_name = [j for i in name.lower().split() for j in i if j not in dict_name.keys()]
+        if len(new_name) == 0:
+            output_name = transate_name(name)
+            logging.info(f"get {name} -> send {output_name}")
+            await message.answer(output_name)
+            await message.answer('Это вроде не ФИО🤷‍♀️')
+        else:
+            await message.answer('Неверно! Введи, пожалуйста, буквы на кириллице.')
     # else:
     #     bot.send_message(message.from_user.id, 'Напиши фио')
 # aiogram - асинхронная библиотека
